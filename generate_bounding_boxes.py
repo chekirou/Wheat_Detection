@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 def predict(model, image_id):
-    # load the image
+    """ generates bounding boxes form semantically segmented image using blob detection """
     submission = []
     image = cv2.imread(f'{image_id}') # reads the image
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) # convert to grey scale
