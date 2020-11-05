@@ -23,3 +23,15 @@ def predict(model, image_id):
     opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel_gauss, iterations=2)
     opening = cv2.morphologyEx(opening, cv2.MORPH_OPEN, kernel_laplace, iterations=2)
     opening = cv2.morphologyEx(opening, cv2.MORPH_OPEN, kernel_ones, iterations=3)
+    
+    countours ,_ = cv2.findContours(opening.astype(int),cv2.RETR_FLOODFILL,cv2.CHAIN_APPROX_SIMPLE)
+    s = ""
+    for c in countours:
+        x,y,w,h = cv2.boundingRect(c)
+        if x <= 0 :
+            x = 0
+        if y <= 0 :
+            y = 0
+        if w * h > 70 :
+            s += "1.0 " + str(x * 4) + " " + str(y * 4) + " " + str(h* 4 ) + " " + str(w* 4 )+ " "
+    return s
